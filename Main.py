@@ -9,6 +9,7 @@ def SVMprediction():
     filename = "outputForSVM.csv"
     rowcount = 0
     colcount = 0
+
     # amount of columns in csv
     cols = 34
     rows = 2168
@@ -34,9 +35,15 @@ def SVMprediction():
             if sameID is False:
                 # push 2d array to an array,
                 arrayoflocations.append(arr)
-                print(arr)
+                
                 # and clear the current 2d array
-                arr = [[0 for i in range(cols)] for j in range(rows)]
+                arr = []
+                for i in range(rows):
+                    col = []
+                    for j in range(cols):
+                        col.append(0)
+                    arr.append(col)
+
                 # reset row iterator
                 rowcount = 0
 
@@ -49,7 +56,7 @@ def SVMprediction():
                 else:
                     # make a 2d array that will contain the rssi readings
                     #print(int(col))
-                    arr[rowcount][colcount] = col
+                    arr[rowcount-1][colcount-1] = int(col)
                     # it is supposed to be [rowcount] [colcount]
 
                 colcount += 1
