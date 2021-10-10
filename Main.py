@@ -11,7 +11,7 @@ def SVMprediction():
     cols = 100
 
     arrayoflocations = []
-    arr = [[] for i in range(cols)]
+    arr = [[],[]]
 
     # reading csv file
     with open(filename, 'r') as csvfile:
@@ -52,7 +52,7 @@ def SVMprediction():
 
                 # and clear the current 2d array
 
-                arr = [[] for i in range(cols)]
+                arr = [[],[]]
                 #print(arr)
 
                 #print(arr)
@@ -63,6 +63,7 @@ def SVMprediction():
 
             # reset column iterator
             colcount = 0
+            temp = []
             firstcol=True
             for col in row:
                 #print(col)
@@ -74,7 +75,8 @@ def SVMprediction():
                     # make a 2d array that will contain the rssi readings
                     # print(int(col))
 
-                    arr[rowcount-1].append(int(col))
+                    temp.append(int(col))
+                    arr.append(temp)
 
                 colcount += 1
             #print(colcount)
