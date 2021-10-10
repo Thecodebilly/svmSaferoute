@@ -3,18 +3,15 @@ from sklearn import svm
 
 
 def SVMprediction():
-    sameID = True
-    LocID = 0
-    NewLocID = 0
     filename = "outputForSVM.csv"
     rowcount = 0
     colcount = 0
 
     # amount of columns in csv
     cols = 34
-    rows = 2168
+
     arrayoflocations = []
-    arr = [[0 for i in range(cols)] for j in range(rows)]
+    arr = [[] for i in range(cols)]
 
     # reading csv file
     with open(filename, 'r') as csvfile:
@@ -24,46 +21,63 @@ def SVMprediction():
         # skip header
         next(csvreader)
 
+        firstrow = True
         for row in csvreader:
-            sameID = True
-            firstcol = True
+            print("again")
+            if firstrow:
+                print(row[0])
+                NewLocID = row[0]
+                LocID= row[0]
+                firstrow=False
+                sameID = True
 
+            else:
+                NewLocID= row[0]
+            print("new")
+            print(NewLocID)
+            print("old")
+            print(LocID)
             if LocID != NewLocID:
                 LocID = NewLocID
                 sameID = False
 
+            print(sameID)
             if sameID is False:
+                #print(arr)
                 # push 2d array to an array,
+                # print(arr)
                 arrayoflocations.append(arr)
-                
+
                 # and clear the current 2d array
-                arr = []
-                for i in range(rows):
-                    col = []
-                    for j in range(cols):
-                        col.append(0)
-                    arr.append(col)
+                arr.clear()
+                #print(arr)
+
+                #print(arr)
+                print("\n\n")
 
                 # reset row iterator
                 rowcount = 0
 
             # reset column iterator
             colcount = 0
+            firstcol=True
             for col in row:
                 if firstcol is True:
-                    NewLocID = col
-                    firstcol = False
+                    firstcol=False
+                    #NewLocID = col
+                    #firstcol = False
                 else:
                     # make a 2d array that will contain the rssi readings
-                    #print(int(col))
-                    arr[rowcount-1][colcount-1] = int(col)
-                    # it is supposed to be [rowcount] [colcount]
+                    # print(int(col))
+                    #print(arr)
+                    arr[rowcount].append(int(col))
 
                 colcount += 1
 
             rowcount += 1
 
-    print(arrayoflocations)
+
+# print(arrayoflocations)
 
 
 # X = [[0, 0], [2, 2]]
