@@ -71,13 +71,17 @@ def SVMprediction():
     ###################################
     #calling SVM below
 
+    print("beacon1:")
     print(arrayoflocations[0][0])
+    print("beacon2:")
     print(arrayoflocations[0][1])
-    print(arrayoflocations[0][2])
-
-    beacons3loc1=[[1,arrayoflocations[0][0]],[2,arrayoflocations[0][1]],[3,arrayoflocations[0][2]]]
-    X = beacons3loc1
-
+    #print(arrayoflocations[0][2])
+    beacon1= arrayoflocations[0][0]
+    beacon2= arrayoflocations[0][1]
+    beacon3= arrayoflocations[0][2]
+    beacons3loc1=[beacon1],[beacon2],[beacon3]
+    X = [beacon1,beacon2]
+    #X= beacons3loc1
     #location1
     #106,79
     #beacon1
@@ -96,10 +100,21 @@ def SVMprediction():
     #5.83095
 
 
-    y = [63.6396, 39.05125,5.83095]
+    y = [63.6396,39.05125]
+    #y= [63.6396,39.05125,5.83095]
 
-    regr = svm.SVR()
-    # add in kernel
+    regr = svm.SVR(kernel="poly")
+
+
     regr.fit(X, y)
-    #print(regr.predict([[1, arrayoflocations[1][0]]]))
 
+    print("beacon1, location2... used for prediction: ")
+    print(arrayoflocations[1][0])
+    print(regr.predict([arrayoflocations[1][0]]))
+
+
+
+
+
+
+SVMprediction()
