@@ -1,5 +1,6 @@
 import csv
 import numpy
+import numpy as np
 from sklearn import svm
 
 
@@ -34,15 +35,14 @@ def SVMprediction():
                 LocID = NewLocID
                 sameID = False
 
-            #print(sameID)
+            # print(sameID)
             if sameID is False:
                 # transpose and push location 2d array
                 rez = [[arr[j][i] for j in range(len(arr))] for i in range(len(arr[0]))]
                 arrayoflocations.append(rez)
-                #print(arrayoflocations)
+                # print(arrayoflocations)
                 # and clear the current 2d array
                 arr = []
-
 
                 rowcount = 0
 
@@ -50,7 +50,7 @@ def SVMprediction():
             firstcol = True
 
             for col in row:
-                #print(col)
+                # print(col)
                 if firstcol is True:
                     firstcol = False
                     continue
@@ -58,63 +58,67 @@ def SVMprediction():
                     temp.append(int(col))
             arr.append(temp)
 
-
-
-
             rowcount += 1
             # print(rowcount)
 
-    #print(arrayoflocations)
+    # print(arrayoflocations)
 
-
-    #formatting of cvs above
+    # formatting of cvs above
     ###################################
-    #calling SVM below
+    # calling SVM below
 
-    print("beacon1:")
-    print(arrayoflocations[0][0])
-    print("beacon2:")
-    print(arrayoflocations[0][1])
-    #print(arrayoflocations[0][2])
-    beacon1= arrayoflocations[0][0]
-    beacon2= arrayoflocations[0][1]
-    beacon3= arrayoflocations[0][2]
-    beacons3loc1=[beacon1],[beacon2],[beacon3]
-    X = [beacon1,beacon2]
-    #X= beacons3loc1
-    #location1
-    #106,79
-    #beacon1
-    #43,88
-    #beacon2
-    #68,88
-    #beacon3
-    #103,74
+    # print("beacon1:")
+    # print(arrayoflocations[0][0])
+    # print("beacon2:")
+    # print(arrayoflocations[0][1])
+    # print(arrayoflocations[0][2])
+    beacon1 = arrayoflocations[0][0]
+    beacon2 = arrayoflocations[0][1]
+    beacon3 = arrayoflocations[0][2]
+    beacons3loc1 = [beacon1], [beacon2], [beacon3]
 
+    #X=[]
+    #for i in arrayoflocations:
+    #    id = 0
+    #    for j in i:
+    #        X.append((id, max(j)))
+    #        id += 1
 
-    #euclidean dist1
-    #63.6396
-    #euclidean dist2
-    #39.05125
-    #euclidean dist3
-    #5.83095
+    #print(X)
 
 
-    y = [63.6396,39.05125]
-    #y= [63.6396,39.05125,5.83095]
 
-    regr = svm.SVR(kernel="poly")
 
+
+    X = [(1, -79), (2, -82), (3, -29)]
+    # this seemingly works-> X = [(1, -79), (2, -82), (3, -29)]
+    # X= beacons3loc1
+    # location1
+    # 106,79
+    # beacon1
+    # 43,88
+    # beacon2
+    # 68,88
+    # beacon3
+    # 103,74
+
+    # euclidean dist1
+    # 63.6396
+    # euclidean dist2
+    # 39.05125
+    # euclidean dist3
+    # 5.83095
+
+    y = [63.6396, 39.05125, 5.83095]
+
+    regr = svm.SVR(kernel="rbf")
 
     regr.fit(X, y)
 
-    print("beacon1, location2... used for prediction: ")
-    print(arrayoflocations[1][0])
-    print(regr.predict([arrayoflocations[1][0]]))
-
-
-
-
+    # print("beacon1, location2... used for prediction: ")
+    # print(arrayoflocations[1][0])
+    arrr = [1, -78]
+    print(regr.predict(np.array(arrr).reshape(1, -1)))
 
 
 SVMprediction()
