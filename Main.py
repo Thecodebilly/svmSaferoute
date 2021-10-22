@@ -67,13 +67,15 @@ def SVMprediction():
     ###################################
     # calling SVM below
 
-    #add if max(!=-1000) add... this was the -100 values are not included.
-    # X=[]
-    # for i in arrayoflocations:
-    #    id = 0
-    #    for j in i:
-    #        X.append((id, max(j)))
-    #        id += 1
+   
+    X=[]
+    for i in arrayoflocations:
+       id = 0
+       for j in i:
+           maxreading=max(j)
+           if maxreading != -1000:
+                X.append((id,maxreading))
+           id += 1
 
     # print(X)
 
@@ -105,7 +107,7 @@ def SVMprediction():
         for row in csvreader:
             IDdictionary[row[0]] = (row[1], row[2])
 
-    
+
     y = [63.6396, 39.05125, 5.83095]
 
     regr = svm.SVR(kernel="rbf")
