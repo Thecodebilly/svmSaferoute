@@ -67,28 +67,15 @@ def SVMprediction():
     ###################################
     # calling SVM below
 
-    # print("beacon1:")
-    # print(arrayoflocations[0][0])
-    # print("beacon2:")
-    # print(arrayoflocations[0][1])
-    # print(arrayoflocations[0][2])
-    beacon1 = arrayoflocations[0][0]
-    beacon2 = arrayoflocations[0][1]
-    beacon3 = arrayoflocations[0][2]
-    beacons3loc1 = [beacon1], [beacon2], [beacon3]
-
-    #X=[]
-    #for i in arrayoflocations:
+    #add if max(!=-1000) add... this was the -100 values are not included.
+    # X=[]
+    # for i in arrayoflocations:
     #    id = 0
     #    for j in i:
     #        X.append((id, max(j)))
     #        id += 1
 
-    #print(X)
-
-
-
-
+    # print(X)
 
     X = [(1, -79), (2, -82), (3, -29)]
     # this seemingly works-> X = [(1, -79), (2, -82), (3, -29)]
@@ -108,7 +95,17 @@ def SVMprediction():
     # 39.05125
     # euclidean dist3
     # 5.83095
+    filename = "id_to_coords.csv"
+    IDdictionary = {}
+    with open(filename, 'r') as csvfile:
+        # creating a csv reader object
+        csvreader = csv.reader(csvfile)
+        # skip header
+        next(csvreader)
+        for row in csvreader:
+            IDdictionary[row[0]] = (row[1], row[2])
 
+    
     y = [63.6396, 39.05125, 5.83095]
 
     regr = svm.SVR(kernel="rbf")
