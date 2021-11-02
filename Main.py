@@ -1,7 +1,10 @@
 import csv
-import numpy
 import numpy as np
 from sklearn import svm
+
+
+def getBeaconsFromSQL():
+    print()
 
 
 def SVMprediction():
@@ -67,15 +70,14 @@ def SVMprediction():
     ###################################
     # calling SVM below
 
-   
-    X=[]
+    X = []
     for i in arrayoflocations:
-       id = 0
-       for j in i:
-           maxreading=max(j)
-           if maxreading != -1000:
-                X.append((id,maxreading))
-           id += 1
+        id = 0
+        for j in i:
+            maxreading = max(j)
+            if maxreading != -1000:
+                X.append((id, maxreading))
+            id += 1
 
     # print(X)
 
@@ -106,7 +108,6 @@ def SVMprediction():
         next(csvreader)
         for row in csvreader:
             IDdictionary[row[0]] = (row[1], row[2])
-
 
     y = [63.6396, 39.05125, 5.83095]
 
