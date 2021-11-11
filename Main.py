@@ -106,7 +106,7 @@ def SVMprediction():
         for j in i:
             maxreading = max(j)
             if maxreading != -1000:
-                X.append((BeaconLocID, maxreading))
+                X.append([BeaconLocID, maxreading, "0"])
                 euclideandist= math.dist((LocationCoords[ReadingLocID][1],LocationCoords[ReadingLocID][2]),(activeBeaconsCoords[BeaconLocID][1],activeBeaconsCoords[BeaconLocID][2]))
                 y.append(euclideandist)
 
@@ -115,8 +115,21 @@ def SVMprediction():
 
 
 
+
+    #print(y)
+    i=0
+    for num in X:
+       num[2]=y[i]
+       i+=1
     print(X)
-    print(y)
+    with open('Parameters.csv', mode='w') as employee_file:
+        employee_writer = csv.writer(employee_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        for row in X:
+            employee_writer.writerow(row)
+
+
+
+
     #X = [(1, -79), (2, -82), (3, -29)]
     # this seemingly works-> X = [(1, -79), (2, -82), (3, -29)]
     # X= beacons3loc1
@@ -150,3 +163,4 @@ def SVMprediction():
 
 
 SVMprediction()
+
