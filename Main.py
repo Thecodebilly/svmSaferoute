@@ -1,5 +1,6 @@
 import csv
 import math
+import random
 
 import numpy as np
 from sklearn import svm
@@ -125,6 +126,10 @@ def SVMprediction():
     with open('Parameters.csv', mode='w') as employee_file:
         employee_writer = csv.writer(employee_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         for row in X:
+            fakedata=int(row[1]*random.uniform(.95, 1.05))
+            print(fakedata)
+            row.append(row[0])
+            row.append(fakedata)
             employee_writer.writerow(row)
 
 
@@ -152,15 +157,14 @@ def SVMprediction():
 
     #y = [63.6396, 39.05125, 5.83095]
 
-    regr = svm.SVR(kernel="rbf")
+    #regr = svm.SVR(kernel="rbf")
 
-    regr.fit(X, y)
+    #regr.fit(X, y)
 
     # print("beacon1, location2... used for prediction: ")
     # print(arrayoflocations[1][0])
-    arrr = [1, -79]
-    print(regr.predict(np.array(arrr).reshape(1, -1)))
+    #arrr = [1, -79]
+    #print(regr.predict(np.array(arrr).reshape(1, -1)))
 
 
 SVMprediction()
-
