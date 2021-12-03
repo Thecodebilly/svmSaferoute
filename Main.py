@@ -102,32 +102,54 @@ def SVMprediction():
 
     X = []
     y = []
-    ReadingLocID = 1
+    ReadingLocID = 0
     for i in arrayoflocations:
-        BeaconLocID = 1
+        BeaconLocID = 0
         # update Location ID
         for j in i:
             maxreading = max(j)
             if maxreading != -1000:
-                if BeaconLocID == 2:
+                #if BeaconLocID == 2:
                     X.append((BeaconLocID, maxreading))
-                    euclideandist = math.dist((LocationCoords[ReadingLocID][1][0], LocationCoords[ReadingLocID][1][1]),
-                                              (
+                   # print(ReadingLocID, BeaconLocID,  maxreading)
+                    euclideandist = math.dist([LocationCoords[ReadingLocID][1][0], LocationCoords[ReadingLocID][1][1]],
+                                              [
                                                   activeBeaconsCoords[BeaconLocID][1],
-                                                  activeBeaconsCoords[BeaconLocID][2]))
+                                                  activeBeaconsCoords[BeaconLocID][2]])
                     y.append(euclideandist)
+                   # print("euclidean dist:")
+                    #print(euclideandist)
+                    #print("x1 ")
+                    #print(LocationCoords[ReadingLocID][1][0])
+                    #print("y1 ")
+                    #print(LocationCoords[ReadingLocID][1][1])
+                    #print("x2 " )
+                    #print(activeBeaconsCoords[BeaconLocID][1])
+                    #print("y2 ")
+                    #print(activeBeaconsCoords[BeaconLocID][2])
 
-            BeaconLocID += 1
-        ReadingLocID += 1
+            BeaconLocID+=1
+
+        ReadingLocID+= 1
+
+
+
+
+
+
 
     print(X)
     print(y)
 
-    regr.C = 1000
+    #print("location table")
+    #print(LocationCoords)
+    #print("beacons table")
+    #print(activeBeaconsCoords)
+    regr.C = 10000000000
     regr.gamma = 1
     regr.fit(X, y)
 
-    # print(regr.predict(np.array([1,-79]).reshape(1, -1)))
+    print(regr.predict(np.array([1,-45]).reshape(1, -1)))
 
 
 def SaveSVM(model):
@@ -137,4 +159,3 @@ def SaveSVM(model):
 
 SVMprediction()
 SaveSVM(regr)
-
